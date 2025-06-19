@@ -15,6 +15,12 @@ class NewsArticle(models.Model):
         help_text="Optional image for the news article."
     )
 
+    def save(self, *args, **kwargs):
+        # Auto-generate slug if it's not provided or is empty
+        if not self.slug:
+            self.slug = slugify(self.title)
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return self.title
 
