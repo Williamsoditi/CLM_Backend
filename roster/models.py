@@ -5,11 +5,12 @@ from cloudinary.models import CloudinaryField
 class Player(models.Model):
     name = models.CharField(max_length=100)
     jersey_number = models.IntegerField(unique=True)
-    height = models.DecimalField(max_length=10, blank=True, null=True, max_digits=1, decimal_places=1)  # e.g., '6\'2"'
-    weight = models.DecimalField(max_length=10, blank=True, null=True, max_digits=1, decimal_places=1)
+    height = models.DecimalField(max_length=10, blank=True, null=True, max_digits=5, decimal_places=1, help_text="Height in ft")  # e.g., '6\'2"'
+    weight = models.DecimalField(max_length=10, blank=True, null=True, max_digits=5, decimal_places=1, help_text="Weight in kilograms")  # e.g., '180 lbs'
     image = CloudinaryField(
         'News Image',
-        help_text="Player Image."
+        help_text="Player Image.",
+        blank=True, null=True,
     ) 
     position = models.CharField(
         max_length=50,
