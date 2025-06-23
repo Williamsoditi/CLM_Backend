@@ -21,7 +21,6 @@ class Player(models.Model):
         ]
     )
 
-
     class Meta:
         verbose_name_plural = "Players"
         ordering = ['jersey_number']
