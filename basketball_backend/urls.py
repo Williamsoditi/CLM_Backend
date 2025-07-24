@@ -16,6 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.views.generic.base import RedirectView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -23,6 +24,9 @@ urlpatterns = [
      path('api/', include('news.urls')),
     path('api/', include('schedule.urls')),
     path('api/', include('roster.urls')),
-    # Add DRF authentication URLs for admin login/logout
-    path('api-auth/', include('rest_framework.urls')),
+    path(
+        'mambas-admin/',
+        RedirectView.as_view(url='/admin/', permanent=False),
+        name='custom_admin_entry_point'
+    ),
 ]
