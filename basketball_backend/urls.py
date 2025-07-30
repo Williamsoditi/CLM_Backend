@@ -24,6 +24,7 @@ urlpatterns = [
      path('api/', include('news.urls')),
     path('api/', include('schedule.urls')),
     path('api/', include('roster.urls')),
+    path('api/', include('results.urls')),
     path(
         'mambas-admin/',
         RedirectView.as_view(url='/admin/', permanent=False),
