@@ -9,7 +9,7 @@ class GameResultSerializer(serializers.ModelSerializer):
     # Fields to display team names and scores dynamically
     home_team_name = serializers.SerializerMethodField()
     away_team_name = serializers.SerializerMethodField()
-    
+    league_name = serializers.SerializerMethodField()
 
     class Meta:
         model = GameResult
@@ -22,10 +22,13 @@ class GameResultSerializer(serializers.ModelSerializer):
             'status',
             'recorded_at',
             'last_updated',
+            'league_name',
         )
         read_only_fields = ['recorded_at', 'last_updated']
 
-    
+    def get_league_name(self, obj):
+        # obj is the GameResult instance
+        return obj.schedule.league.name
 
     def get_home_team_name(self, obj):
         schedule = obj.schedule
