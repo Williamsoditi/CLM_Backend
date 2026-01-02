@@ -6,7 +6,7 @@ class Player(models.Model):
     name = models.CharField(max_length=100)
     jersey_number = models.IntegerField(unique=True)
     height = models.DecimalField(max_length=10, blank=True, null=True, max_digits=5, decimal_places=1, help_text="Height in ft")  # e.g., '6\'2"'
-    weight = models.DecimalField(max_length=10, blank=True, null=True, max_digits=5, decimal_places=1, help_text="Weight in kilograms")  # e.g., '180 lbs'
+    weight = models.IntegerField(blank=True, null=True, help_text="Weight in kilograms")  # e.g., '180 lbs'
     image = CloudinaryField('image', folder='roster_images/', blank=True, null=True, help_text="Upload player image")
     position = models.CharField(
         max_length=50,
