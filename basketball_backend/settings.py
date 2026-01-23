@@ -43,9 +43,11 @@ INSTALLED_APPS = [
     'baton.autodiscover',
 ]
 # Cloudinary Configuration
-CLOUDINARY_CLOUD_NAME = os.environ.get('CLOUDINARY_CLOUD_NAME')
-CLOUDINARY_API_KEY = os.environ.get('CLOUDINARY_API_KEY')
-CLOUDINARY_API_SECRET = os.environ.get('CLOUDINARY_API_SECRET')
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
+    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),
+}
 
 
 
@@ -93,9 +95,11 @@ WSGI_APPLICATION = 'basketball_backend.wsgi.application'
 
 DATABASES = {
     'default': dj_database_url.config(
-        default=os.environ.get('DATABASE_URL'),
-        conn_max_age=600, 
-        ssl_require={'sslmode': 'require'})
+        # If DATABASE_URL exists (on Render), use it. 
+        # If not (locally), use SQLite.
+        default=os.environ.get('DATABASE_URL', f"sqlite:///{os.path.join(BASE_DIR, 'db.sqlite3')}"),
+        conn_max_age=600,
+    )
 }
 
 
