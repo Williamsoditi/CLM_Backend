@@ -1,3 +1,4 @@
+print("DEBUG: Starting the admin creation script...")
 import os
 import django
 
