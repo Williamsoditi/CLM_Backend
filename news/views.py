@@ -1,6 +1,6 @@
 from rest_framework import generics
-from .models import NewsArticle 
-from .serializers import NewsArticleSerializer
+from .models import *
+from .serializers import *
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAdminUser
 
 class NewsArticleList(generics.ListAPIView):
@@ -22,5 +22,15 @@ class NewsArticleDetail(generics.RetrieveAPIView):
 
     def get_permissions(self):
         if self.request.method in ['PUT', 'PATCH', 'DELETE']:
+            return [IsAdminUser()]
+        return [IsAuthenticatedOrReadOnly()]
+    
+class GalleryImageList(generics.ListAPIView):
+    queryset = GalleryImage.objects.all()
+    serializer_class = GalleryImageSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
+
+    def get_permissions(self):
+        if self.request.method == 'POST':
             return [IsAdminUser()]
         return [IsAuthenticatedOrReadOnly()]

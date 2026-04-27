@@ -26,3 +26,14 @@ class NewsArticle(models.Model):
 
     class Meta:
         ordering = ['-published_date'] 
+        
+class GalleryImage(models.Model):
+    caption = models.CharField(max_length=255, blank=True, help_text="Optional caption for the gallery image.")
+    image = CloudinaryField(
+        'Gallery Image',
+        help_text="Image for the gallery."
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.caption or f"Image {self.id}"
