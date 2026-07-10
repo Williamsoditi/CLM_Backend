@@ -19,34 +19,39 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECRET_KEY = 'django-insecure-%q^&7u9^itl)*mpa3^t-ol8z--1ex#c^qfrsl^8c+mb9xit&&u'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = 'DATABASE_URL' not in os.environ
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['api.cliquemambas.org', 'localhost', '127.0.0.1']
 # Application definition
 
 INSTALLED_APPS = [
-    'baton',
+    'baton',  # 1. Baton first
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'baton.autodiscover',  # 2. Baton autodiscover immediately after core apps
+    
+    # 3. Third-party packages and storages
     'cloudinary_storage',
     'cloudinary',
     'rest_framework',
     'corsheaders',
+    
+    # 4. Your custom basketball apps go at the very bottom
     'news',
     'schedule',
     'roster',
     'results',
-    'baton.autodiscover',
 ]
 # Cloudinary Configuration
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME'),
     'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
     'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),
+    'SECURE': os.environ.get('CLOUDINARY_SECURE', 'True') == 'True',
 }
 
 
@@ -68,7 +73,6 @@ MIDDLEWARE = [
 
 CORS_ALLOW_ALL_ORIGINS = True
 
-CSRF_TRUSTED_ORIGINS = ['https://clm-backend-gc23.onrender.com']
 
 ROOT_URLCONF = 'basketball_backend.urls'
 
